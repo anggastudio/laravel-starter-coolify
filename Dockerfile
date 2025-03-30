@@ -37,7 +37,10 @@ RUN chown -R unit:unit /var/www/html && \
 RUN composer install --prefer-dist --optimize-autoloader --no-interaction && \
     npm install && \
     VITE_APP_URL="${APP_URL}" npm run build && \
-    php artisan storage:link
+    php artisan storage:link && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
 
 COPY unit.json /docker-entrypoint.d/unit.json
 
