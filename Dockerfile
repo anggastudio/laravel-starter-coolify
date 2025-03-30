@@ -23,7 +23,8 @@ RUN mkdir -p /var/www/html/storage/logs \
     /var/www/html/storage/framework/cache \
     /var/www/html/storage/framework/sessions \
     /var/www/html/storage/framework/views \
-    /var/www/html/bootstrap/cache
+    /var/www/html/bootstrap/cache \
+    /var/www/html/public/build
 
 COPY . .
 
@@ -32,8 +33,11 @@ RUN chown -R unit:unit /var/www/html && \
     touch /var/www/html/storage/logs/laravel.log && \
     chmod 664 /var/www/html/storage/logs/laravel.log
 
-RUN composer install --prefer-dist --optimize-autoloader --no-interaction
-RUN npm install && npm run build
+# Build assets with proper URL configuration
+RUN composer install --prefer-dist --optimize-autoloader --no-interaction && \
+    npm install && \
+    VITE_APP_URL="${APP_URL}" npm run build && \
+    php artisan storage:link
 
 COPY unit.json /docker-entrypoint.d/unit.json
 
