@@ -1,5 +1,22 @@
 FROM unit:1.34.1-php8.3
 
+ARG APP_DEBUG
+ARG APP_ENV
+ARG APP_FAKER_LOCALE
+ARG APP_FALLBACK_LOCALE
+ARG APP_KEY
+ARG APP_LOCALE
+ARG APP_MAINTENANCE_DRIVER
+ARG APP_NAME
+ARG APP_URL
+ARG BCRYPT_ROUNDS
+ARG CACHE_STORE
+ARG DB_CONNECTION
+ARG FILESYSTEM_DISK
+ARG MAIL_MAILER
+ARG PHP_CLI_SERVER_WORKERS
+ARG SESSION_DRIVER
+
 RUN apt update && apt install -y \
     curl unzip git libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
