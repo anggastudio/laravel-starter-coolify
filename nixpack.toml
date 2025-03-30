@@ -28,17 +28,16 @@ http {
         listen [::]:${PORT};
         server_name localhost;
         
-        # Hard-coded root path for Laravel public directory
         root /app/public;
+        index index.php;
 
         add_header X-Content-Type-Options "nosniff";
         client_max_body_size 35M;
-        index index.php;
         charset utf-8;
 
-        # Single location block for Laravel routing
         location / {
             try_files $uri $uri/ /index.php?$query_string;
+            index index.php;
         }
 
         location = /favicon.ico { access_log off; log_not_found off; }
