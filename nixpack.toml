@@ -11,9 +11,9 @@ cmds = [
     "cp /assets/supervisord.conf /etc/supervisord.conf",
     "chmod +x /assets/start.sh",
     "chmod -R 775 /app/storage /app/bootstrap/cache",
-    "chown -R www-data:www-data /var/log /app/storage /app/bootstrap/cache"
+    "chown -R www-data:www-data /var/log /app/storage /app/bootstrap/cache",
     "composer install --optimize-autoloader --no-dev",
-    "php artisan optimize:clear"
+    "php artisan optimize:clear",
     "..."
 ]
 
