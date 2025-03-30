@@ -2,6 +2,7 @@ FROM unit:1.34.1-php8.3
 
 RUN apt update && apt install -y \
     curl unzip git libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
+    nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath \
     && pecl install redis \
@@ -24,7 +25,8 @@ RUN chown -R unit:unit /var/www/html/storage bootstrap/cache && chmod -R 775 /va
 
 COPY . .
 
-RUN chown -R unit:unit storage bootstrap/cache && chmod -R 775 storage bootstrap/cache
+# Install Node.js dependencies and build assets
+RUN npm install && npm run build
 
 RUN composer install --prefer-dist --optimize-autoloader --no-interaction
 
